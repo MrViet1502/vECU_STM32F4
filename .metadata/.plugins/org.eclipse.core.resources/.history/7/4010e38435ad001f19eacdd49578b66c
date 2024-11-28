@@ -53,20 +53,7 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_Init(void);
 static void MX_USART3_Init(void);
 /* USER CODE BEGIN PFP */
-/* USER CODE BEGIN PFP */
-#ifdef __GNUC__
-#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#else
-#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
-#endif /* __GNUC__ */
-/* USER CODE END PFP */
 
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-PUTCHAR_PROTOTYPE {
-    HAL_USART_Transmit(&husart2, (uint8_t *)&ch, 1, 0xFFFF);
-    return ch;
-}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -104,28 +91,19 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_Init();
   MX_USART3_Init();
-
-
-  printf("\r\nUART printf example initialized.\r\n");
-      printf("System running...\r\n");
   /* USER CODE BEGIN 2 */
   HAL_USART_Receive_IT(&husart3,&receive_data,1);
   	HAL_USART_Receive_IT(&husart2,&echo_receive_data,1);
-
-
   /* USER CODE END 2 */
-  	//char msg[] = "Hello from STM32F3!\r\n";
+  	char msg[] = "Hello from STM32F3!\r\n";
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
     /* USER CODE END WHILE */
 	 // HAL_USART_Transmit_IT(&husart2,&send_data,1);
 	  		//send_data++;
-	  //HAL_USART_Transmit(&husart2, (uint8_t*)msg, sizeof(msg) - 1, 1000);
-	  printf("Hello from STM32F3! Counter: %lu\r\n", HAL_GetTick() / 1000);
-
+	  HAL_USART_Transmit(&husart2, (uint8_t*)msg, sizeof(msg) - 1, 1000);
 	  		HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
